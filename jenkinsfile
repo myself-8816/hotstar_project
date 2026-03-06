@@ -1,1 +1,33 @@
+pipeline {
+    agent any
+     tools{
+maven'mymave'
+}
+    stages {
+        stage('checkout') {
+            steps {
+checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/myself-8816/hotstar_project.git']])
+
+            }
+        }
+		stage('clean package'){
+		steps{
+		   sh 'mvn clean package'
+		}
+		}
+		stage('docker_build'){
+		
+		steps{
+		     sh 'docker build -t imag1 .'
+		}
+		}
+		stage('docker_run'){
+		
+		steps{
+		     sh 'docker run -itd --name cont1 -p 8085:8080 imag1'
+		}
+		}
+   
+    }
+}
 
