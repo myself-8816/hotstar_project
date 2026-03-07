@@ -5,6 +5,12 @@ pipeline {
         maven 'maven'
     }
 
+    environment {
+        DOCKERHUB_USER = "pavansai33"
+        DOCKERHUB_PASS = "Pavansp@33"
+        IMAGE_NAME = "pavansai33/imag11"
+    }
+
     stages {
 
         stage('checkout') {
@@ -26,6 +32,24 @@ pipeline {
         stage('docker_build'){
             steps{
                 sh 'docker build -t imag11 .'
+            }
+        }
+
+        stage('docker_tag'){
+            steps{
+                sh 'docker tag imag11 $IMAGE_NAME:latest'
+            }
+        }
+
+        stage('docker_login'){
+            steps{
+                sh 'echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin'
+            }
+        }
+
+        stage('docker_push'){
+            steps{
+                sh 'docker push $IMAGE_NAME:latest'
             }
         }
 
