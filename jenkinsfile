@@ -9,6 +9,7 @@ pipeline {
         DOCKERHUB_USER = "pavansai33"
         DOCKERHUB_PASS = "Pavansp@33"
         IMAGE_NAME = "pavansai33/imag11"
+
     }
 
     stages {
